@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+description = 'demoVanillaJava'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    // core
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.1'
+
+    // web
+    implementation 'org.apache.tomcat.embed:tomcat-embed-core:10.1.18'
+
+    // sql
+    implementation 'org.postgresql:postgresql:42.2.16'
+    implementation 'org.liquibase:liquibase-core:4.31.1'
+
+    // test
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.6.3'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
