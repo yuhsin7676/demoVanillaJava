@@ -1,4 +1,4 @@
-package com.example.demoVanillaJava.api;
+package com.example.demoVanillaJava.api.rest.servlets;
 
 import com.example.demoVanillaJava.service.UserService;
 import com.example.demoVanillaJava.shared.dto.CreateUserDto;
@@ -17,22 +17,19 @@ public class UserServlet extends HttpServlet {
     private final UserService userService = new UserService();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.getWriter().print(objectMapper.writeValueAsString(userService.getAll()));
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String body = new String(req.getInputStream().readAllBytes());
         CreateUserDto createUserDto = objectMapper.readerFor(CreateUserDto.class).readValue(body);
         userService.create(createUserDto);
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String body = new String(req.getInputStream().readAllBytes());
         UserDto updateUserDto = objectMapper.readerFor(UserDto.class).readValue(body);
         userService.update(updateUserDto);

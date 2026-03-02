@@ -1,5 +1,7 @@
-package com.example.demoVanillaJava.api;
+package com.example.demoVanillaJava.api.rest;
 
+import com.example.demoVanillaJava.api.rest.servlets.KafkaServlet;
+import com.example.demoVanillaJava.api.rest.servlets.UserServlet;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 
@@ -17,6 +19,8 @@ public class TomcatService {
             // Добавление сервлета
             Tomcat.addServlet(ctx, "user", new UserServlet());
             ctx.addServletMappingDecoded("/user", "user");
+            Tomcat.addServlet(ctx, "kafka", new KafkaServlet());
+            ctx.addServletMappingDecoded("/sendIntoKafka", "kafka");
 
             tomcat.start();
             tomcat.getServer().await();
