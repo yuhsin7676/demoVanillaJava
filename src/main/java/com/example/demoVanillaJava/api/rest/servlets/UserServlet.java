@@ -3,7 +3,6 @@ package com.example.demoVanillaJava.api.rest.servlets;
 import com.example.demoVanillaJava.service.UserService;
 import com.example.demoVanillaJava.shared.dto.CreateUserDto;
 import com.example.demoVanillaJava.shared.dto.UserDto;
-import com.example.demoVanillaJava.spi.SelectDBConnector;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

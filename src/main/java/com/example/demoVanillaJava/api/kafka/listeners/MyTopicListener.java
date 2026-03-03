@@ -29,7 +29,7 @@ public class MyTopicListener {
         new Thread(() -> {
             try {
                 while (true) {
-                    ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(1000));
+                    ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(2));
 
                     if (records.isEmpty()) {
                         System.out.println("It is Empty!!");

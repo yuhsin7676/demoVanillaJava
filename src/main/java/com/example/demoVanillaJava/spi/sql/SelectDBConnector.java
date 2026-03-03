@@ -1,8 +1,6 @@
-package com.example.demoVanillaJava.spi;
+package com.example.demoVanillaJava.spi.sql;
 
 import java.sql.*;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class SelectDBConnector extends DBConnector{
 

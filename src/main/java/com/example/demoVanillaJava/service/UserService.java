@@ -2,8 +2,8 @@ package com.example.demoVanillaJava.service;
 
 import com.example.demoVanillaJava.shared.dto.CreateUserDto;
 import com.example.demoVanillaJava.shared.dto.UserDto;
-import com.example.demoVanillaJava.spi.NonSelectDBConnector;
-import com.example.demoVanillaJava.spi.SelectDBConnector;
+import com.example.demoVanillaJava.spi.sql.NonSelectDBConnector;
+import com.example.demoVanillaJava.spi.sql.SelectDBConnector;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

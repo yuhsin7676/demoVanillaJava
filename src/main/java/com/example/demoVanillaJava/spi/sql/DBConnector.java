@@ -1,4 +1,4 @@
-package com.example.demoVanillaJava.spi;
+package com.example.demoVanillaJava.spi.sql;
 
 import java.sql.*;
 

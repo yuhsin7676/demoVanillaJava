@@ -1,4 +1,4 @@
-package com.example.demoVanillaJava.spi;
+package com.example.demoVanillaJava.spi.sql;
 
 import liquibase.Contexts;
 import liquibase.LabelExpression;
