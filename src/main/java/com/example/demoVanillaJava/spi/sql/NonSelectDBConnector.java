@@ -14,7 +14,7 @@ public class NonSelectDBConnector extends DBConnector {
     }
 
     public void tryConnect(PreparedStatement preparedStatement) throws SQLException{
-        ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.executeUpdate();
     }
 
 }
