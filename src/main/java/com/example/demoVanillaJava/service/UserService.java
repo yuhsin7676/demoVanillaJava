@@ -72,7 +72,7 @@ public class UserService {
 
     public void delete(Long id) { // Вот тут обычно используется ORM
         try {
-            String cmstr = "DELETE \"user\" WHERE id = ?;";
+            String cmstr = "DELETE FROM \"user\" WHERE id = ?;";
             PreparedStatement ps = nonSelectDBConnector.getPreparedStatement(cmstr);
             ps.setLong(1, id);
             nonSelectDBConnector.tryConnect(ps);

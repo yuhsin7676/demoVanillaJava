@@ -23,8 +23,12 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.24'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.1'
 
-    // web
+    // web-server
     implementation 'org.apache.tomcat.embed:tomcat-embed-core:10.1.18'
+
+    // swagger
+    implementation 'io.swagger.core.v3:swagger-core-jakarta:2.1.13'
+    implementation 'org.webjars:swagger-ui:4.15.5'
 
     // sql
     implementation 'org.postgresql:postgresql:42.2.16'
