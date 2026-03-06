@@ -34,6 +34,12 @@ public class TomcatService {
             ctx.addServletMappingDecoded("/swagger-ui/*", "swagger");
             Tomcat.addServlet(ctx, "openapi", new OpenApiServlet());
             ctx.addServletMappingDecoded("/openapi/*", "openapi");
+            Tomcat.addServlet(ctx, "prometheus", new PrometheusServlet());
+            ctx.addServletMappingDecoded("/prometheus", "prometheus");
+            Tomcat.addServlet(ctx, "prometheusGet", new PrometheusGetServlet());
+            ctx.addServletMappingDecoded("/prometheus/get", "prometheusGet");
+            Tomcat.addServlet(ctx, "metrics", new MetricsServlet());
+            ctx.addServletMappingDecoded("/metrics", "metrics");
 
             tomcat.start();
             tomcat.getServer().await();

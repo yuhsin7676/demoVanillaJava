@@ -7,15 +7,15 @@ import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
-import io.swagger.v3.oas.models.media.Content;
-import io.swagger.v3.oas.models.media.MediaType;
-import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.media.*;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.parameters.RequestBody;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.servers.Server;
 import io.swagger.v3.oas.models.tags.Tag;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,6 +23,19 @@ import java.util.List;
 import java.util.Map;
 
 public class MyOpenApiGenerator {
+
+//    public static OpenAPI openAPI = new OpenAPI().info(new Info());
+
+    public static class MySchema extends Schema {
+
+        private Schema items;
+
+        public MySchema items(Schema schema) {
+            items = schema;
+            return this;
+        }
+
+    }
 
     public static OpenAPI createOpenAPI() {
         OpenAPI oas = new OpenAPI();
@@ -56,20 +69,31 @@ public class MyOpenApiGenerator {
         oas.tags(Arrays.asList(
                 new Tag().name("user").description("Операции с пользователями"),
                 new Tag().name("kafka").description("Операции с кафкой"),
-                new Tag().name("redis").description("Операции с редис")
+                new Tag().name("redis").description("Операции с редис"),
+                new Tag().name("prometheus").description("Операции с метриками")
         ));
+
+        Schema schema = new Schema<>().type("array");
 
         Components components = new Components();
         components.schemas(Map.of(
                 "CreateUserDto", new Schema<>()
                         .type("object")
-                        .addProperties("login", new Schema<>().type("string"))
-                        .addProperties("name", new Schema<>().type("string")),
+                        .addProperties("login", new StringSchema())
+                        .addProperties("name", new StringSchema()),
                 "UserDto", new Schema<>()
                         .type("object")
-                        .addProperties("id", new Schema<>().type("integer").format("int64"))
-                        .addProperties("login", new Schema<>().type("string"))
-                        .addProperties("name", new Schema<>().type("string"))
+                        .addProperties("id", new IntegerSchema().format("int64"))
+                        .addProperties("login", new StringSchema())
+                        .addProperties("name", new StringSchema()),
+                "CounterDto", new Schema<>()
+                        .type("object")
+                        .addProperties("name", new StringSchema())
+                        .addProperties("tags", new ArraySchema().items(new Schema<>().$ref("#/components/schemas/TagDto"))),
+                "TagDto", new Schema<>()
+                        .type("object")
+                        .addProperties("name", new StringSchema())
+                        .addProperties("value", new StringSchema())
         ));
         oas.components(components);
 
@@ -180,11 +204,48 @@ public class MyOpenApiGenerator {
                                         .description("OK")
                                 )));
 
+        PathItem prometheusPathItem = new PathItem()
+                .post(new Operation()
+                        .tags(List.of("prometheus"))
+                        .requestBody(new RequestBody()
+                                .content(new Content()
+                                        .addMediaType("application/json", new MediaType()
+                                                .schema(new Schema<>().$ref("#/components/schemas/CounterDto"))
+                                        )))
+                        .responses(new ApiResponses()
+                                .addApiResponse("200", new ApiResponse()
+                                        .description("OK")
+                                )))
+                .put(new Operation()
+                        .tags(List.of("prometheus"))
+                        .requestBody(new RequestBody()
+                                .content(new Content()
+                                        .addMediaType("application/json", new MediaType()
+                                                .schema(new Schema<>().$ref("#/components/schemas/CounterDto"))
+                                        )))
+                        .responses(new ApiResponses()
+                                .addApiResponse("200", new ApiResponse()
+                                        .description("OK")
+                                )));
+
+        PathItem prometheusGetPathItem = new PathItem()
+                .post(new Operation()
+                        .tags(List.of("prometheus"))
+                        .requestBody(new RequestBody()
+                                .content(new Content()
+                                        .addMediaType("application/json", new MediaType()
+                                                .schema(new Schema<>().$ref("#/components/schemas/CounterDto"))
+                                        )))
+                        .responses(new ApiResponses()
+                                .addApiResponse("200", new ApiResponse()
+                                        .description("OK")
+                                )));
+
         oas.path("/user", userPathItem);
         oas.path("/sendIntoKafka", kafkaPathItem);
         oas.path("/redis", redisPathItem);
-
-
+        oas.path("/prometheus", prometheusPathItem);
+        oas.path("/prometheus/get", prometheusGetPathItem);
 
         return oas;
     }

@@ -1,0 +1,39 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'micrometer-monitor'
+
+# Правила алертинга (опционально)
+#rule_files:
+#  - "alerts.yml"
+
+# Конфигурация сбора метрик
+scrape_configs:
+  # Наше Java приложение
+  - job_name: 'java-app'
+    scrape_interval: 10s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['192.168.42.147:8080']
+        labels:
+          application: 'demoVanillaJava'
+#          environment: 'development'
+
+  # Prometheus сам
+  - job_name: 'prometheus'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['localhost:9090']
+
+#  # Node Exporter (метрики хоста)
+#  - job_name: 'node-exporter'
+#    scrape_interval: 15s
+#    static_configs:
+#      - targets: ['node-exporter:9100']
+#
+#  # cAdvisor (метрики Docker контейнеров)
+#  - job_name: 'cadvisor'
+#    scrape_interval: 15s
+#    static_configs:
+#      - targets: ['cadvisor:8080']
