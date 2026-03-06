@@ -181,7 +181,7 @@ public class MyOpenApiGenerator {
                                 )));
 
         oas.path("/user", userPathItem);
-        oas.path("/kafka", kafkaPathItem);
+        oas.path("/sendIntoKafka", kafkaPathItem);
         oas.path("/redis", redisPathItem);
 
 
