@@ -5,6 +5,7 @@ create table "user"
 (
     id      int8 primary key not null,
     login   varchar not null unique,
+    password   varchar,
     name    varchar
 );
 

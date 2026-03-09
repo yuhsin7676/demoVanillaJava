@@ -18,6 +18,9 @@ public class OpenApiServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        resp.getWriter().print(objectMapper.writeValueAsString(MyOpenApiGenerator.createOpenAPI()));
+        resp.getWriter().print(objectMapper.writeValueAsString(MyOpenApiGenerator.createOpenAPI()) // Енамы неправильно парсит в json
+                .replaceAll("\"type\":\"APIKEY\",", "\"type\":\"apiKey\",")
+                .replaceAll("\"type\":\"HTTP\",", "\"type\":\"http\",")
+                .replaceAll("\"in\":\"HEADER\"", "\"in\":\"header\""));
     }
 }

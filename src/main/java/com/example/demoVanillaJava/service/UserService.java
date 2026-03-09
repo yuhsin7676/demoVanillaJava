@@ -38,13 +38,14 @@ public class UserService {
     public void create(CreateUserDto createUserDto) { // Вот тут обычно используется ORM
         try {
             String cmstr = "INSERT INTO \"user\" " +
-                    "(id, login, name) " +
-                    "VALUES(?, ?, ?)";
+                    "(id, login, password, name) " +
+                    "VALUES(?, ?, ?, ?)";
 
             PreparedStatement ps = nonSelectDBConnector.getPreparedStatement(cmstr);
             ps.setLong(1, new Random().nextLong());
             ps.setString(2, createUserDto.getLogin());
-            ps.setString(3, createUserDto.getName());
+            ps.setString(3, createUserDto.getPassword());
+            ps.setString(4, createUserDto.getName());
             nonSelectDBConnector.tryConnect(ps);
 
         } catch (SQLException e) {
@@ -56,13 +57,15 @@ public class UserService {
         try {
             String cmstr = "UPDATE \"user\" " +
                     "SET login = ?, " +
+                    "password = ?, " +
                     "\"name\" = ? " +
                     "WHERE id = ?;";
 
             PreparedStatement ps = nonSelectDBConnector.getPreparedStatement(cmstr);
-            ps.setLong(3, updateUserDto.getId());
+            ps.setLong(4, updateUserDto.getId());
             ps.setString(1, updateUserDto.getLogin());
-            ps.setString(2, updateUserDto.getName());
+            ps.setString(2, updateUserDto.getPassword());
+            ps.setString(3, updateUserDto.getName());
             nonSelectDBConnector.tryConnect(ps);
 
         } catch (SQLException e) {

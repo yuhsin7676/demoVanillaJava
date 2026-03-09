@@ -7,5 +7,6 @@ import lombok.Setter;
 @Setter
 public class CreateUserDto {
     private String login;
+    private String password;
     private String name;
 }
