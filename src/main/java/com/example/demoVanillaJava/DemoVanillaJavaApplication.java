@@ -16,10 +16,7 @@ public class DemoVanillaJavaApplication {
         // 2. Создаём кафка-слушателя
         new MyTopicListener();
 
-        // 3. Создаём сборщика метрик
-//        new PrometheusService();
-
-        // 4. Запускаем веб-сервер
+        // 3. Запускаем веб-сервер
         new TomcatService().start();
         
     }

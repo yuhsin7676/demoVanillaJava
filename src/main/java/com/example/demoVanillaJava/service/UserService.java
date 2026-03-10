@@ -65,7 +65,7 @@ public class UserService {
             PreparedStatement ps = nonSelectDBConnector.getPreparedStatement(cmstr);
             ps.setLong(1, new Random().nextLong());
             ps.setString(2, createUserDto.getLogin());
-            ps.setString(3, createUserDto.getPassword());
+            ps.setString(3, AuthorizationService.getInstance().sha256Hash(createUserDto.getPassword()));
             ps.setString(4, createUserDto.getName());
             nonSelectDBConnector.tryConnect(ps);
 
@@ -85,7 +85,7 @@ public class UserService {
             PreparedStatement ps = nonSelectDBConnector.getPreparedStatement(cmstr);
             ps.setLong(4, updateUserDto.getId());
             ps.setString(1, updateUserDto.getLogin());
-            ps.setString(2, updateUserDto.getPassword());
+            ps.setString(2, AuthorizationService.getInstance().sha256Hash(updateUserDto.getPassword()));
             ps.setString(3, updateUserDto.getName());
             nonSelectDBConnector.tryConnect(ps);
 

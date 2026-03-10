@@ -11,6 +11,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.Base64;
 import java.util.Map;
@@ -32,7 +36,7 @@ public class AuthorizationService {
     public String authentication(LoginDto loginDto) {
 
         UserDto userDto = userService.getByLogin(loginDto);
-        if (userDto == null || !Objects.equals(loginDto.getPassword(), userDto.getPassword())) return null;
+        if (userDto == null || !Objects.equals(sha256Hash(loginDto.getPassword()), userDto.getPassword())) return null;
 
         return "Bearer " + JWT.create()
                 .withHeader(Map.of(
@@ -57,6 +61,17 @@ public class AuthorizationService {
             return "admin".equals(loginDto.getLogin());
         } catch (TokenExpiredException e) {
             return false;
+        }
+    }
+
+    public String sha256Hash(String password) {
+        if (password == null) return null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] digest = md.digest(password.getBytes(StandardCharsets.UTF_8));
+            return String.format("%064x", new BigInteger(1, digest));
+        } catch (NoSuchAlgorithmException ignored) {
+            throw new RuntimeException();
         }
     }
 
