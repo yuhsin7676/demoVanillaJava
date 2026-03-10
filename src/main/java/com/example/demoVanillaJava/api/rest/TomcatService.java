@@ -38,6 +38,8 @@ public class TomcatService {
             ctx.addServletMappingDecoded("/prometheus", "prometheus");
             Tomcat.addServlet(ctx, "prometheusGet", new PrometheusGetServlet());
             ctx.addServletMappingDecoded("/prometheus/get", "prometheusGet");
+            Tomcat.addServlet(ctx, "login", new LoginServlet());
+            ctx.addServletMappingDecoded("/login", "login");
             Tomcat.addServlet(ctx, "metrics", new MetricsServlet());
             ctx.addServletMappingDecoded("/metrics", "metrics");
 

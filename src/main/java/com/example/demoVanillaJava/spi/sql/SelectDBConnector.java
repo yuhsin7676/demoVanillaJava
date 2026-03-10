@@ -4,6 +4,12 @@ import java.sql.*;
 
 public class SelectDBConnector extends DBConnector{
 
+    @Override
+    public PreparedStatement getPreparedStatement(String strSQL) throws SQLException {
+        Connection connection = DriverManager.getConnection(URL + "/" + DATA_BASE_NAME, USER_NAME, PASSWORD);
+        return connection.prepareStatement(strSQL, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+    }
+
     public String[][] tryConnect(String selectSQL) throws SQLException {
 
         Connection connection = DriverManager.getConnection(URL + "/" + DATA_BASE_NAME, USER_NAME, PASSWORD);

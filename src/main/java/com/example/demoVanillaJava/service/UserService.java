@@ -1,6 +1,7 @@
 package com.example.demoVanillaJava.service;
 
 import com.example.demoVanillaJava.shared.dto.CreateUserDto;
+import com.example.demoVanillaJava.shared.dto.LoginDto;
 import com.example.demoVanillaJava.shared.dto.UserDto;
 import com.example.demoVanillaJava.spi.sql.NonSelectDBConnector;
 import com.example.demoVanillaJava.spi.sql.SelectDBConnector;
@@ -30,6 +31,26 @@ public class UserService {
             }
 
             return users;
+        } catch (SQLException e) {
+            throw new RuntimeException("Ошибка получения пользователей");
+        }
+    }
+
+    public UserDto getByLogin(LoginDto loginDto) { // Вот тут обычно используется ORM
+        try {
+            String cmstr = "select id, login, password, name from \"user\" where login = ? ";
+            PreparedStatement ps = selectDBConnector.getPreparedStatement(cmstr);
+            ps.setString(1, loginDto.getLogin());
+
+            String[][] result = selectDBConnector.tryConnect(ps);
+            if (result.length == 2) {
+                UserDto user = new UserDto();
+                user.setId(Long.parseLong(result[1][0]));
+                user.setLogin(result[1][1]);
+                user.setPassword(result[1][2]);
+                user.setName(result[1][3]);
+                return user;
+            } else return null;
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка получения пользователей");
         }

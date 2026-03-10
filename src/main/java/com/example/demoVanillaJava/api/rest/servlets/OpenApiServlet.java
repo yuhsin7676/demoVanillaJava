@@ -1,6 +1,6 @@
 package com.example.demoVanillaJava.api.rest.servlets;
 
-import com.example.demoVanillaJava.api.rest.swagger.MyOpenApiGenerator;
+import com.example.demoVanillaJava.api.rest.swagger.OpenApiGenerator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServlet;
@@ -18,7 +18,7 @@ public class OpenApiServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        resp.getWriter().print(objectMapper.writeValueAsString(MyOpenApiGenerator.createOpenAPI()) // Енамы неправильно парсит в json
+        resp.getWriter().print(objectMapper.writeValueAsString(OpenApiGenerator.createOpenAPI()) // Енамы неправильно парсит в json
                 .replaceAll("\"type\":\"APIKEY\",", "\"type\":\"apiKey\",")
                 .replaceAll("\"type\":\"HTTP\",", "\"type\":\"http\",")
                 .replaceAll("\"in\":\"HEADER\"", "\"in\":\"header\""));

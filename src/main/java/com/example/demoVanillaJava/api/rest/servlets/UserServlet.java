@@ -15,7 +15,7 @@ public class UserServlet extends HttpServlet {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final UserService userService = new UserService();
-    private final AuthorizationService authorizationService = new AuthorizationService();
+    private final AuthorizationService authorizationService = AuthorizationService.getInstance();
 
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
