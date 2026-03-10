@@ -2,9 +2,7 @@ package com.example.demoVanillaJava;
 
 import com.example.demoVanillaJava.api.kafka.listeners.MyTopicListener;
 import com.example.demoVanillaJava.api.rest.TomcatService;
-import com.example.demoVanillaJava.spi.prometheus.PrometheusService;
 import com.example.demoVanillaJava.spi.sql.LiquibaseService;
-import redis.clients.jedis.Jedis;
 
 public class DemoVanillaJavaApplication {
 

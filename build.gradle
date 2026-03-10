@@ -12,6 +12,25 @@ java {
     }
 }
 
+jar {
+
+    // Указание главного класса
+    manifest {
+        attributes(
+                'Main-Class': 'com.example.demoVanillaJava.DemoVanillaJavaApplication'
+        )
+    }
+
+    // Объединение всех зависимостей
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    // Устранение конфликтов подписей (если есть)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+}
+
 repositories {
     mavenCentral()
 }
