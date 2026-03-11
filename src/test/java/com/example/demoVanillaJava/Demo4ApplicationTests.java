@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class Demo4ApplicationTests {
 
-    @Test
+//    @Test
     void foo() {
         assertEquals(2, 2);
     }
